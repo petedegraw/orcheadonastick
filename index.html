@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Orc Head on a Stick - Lord of the Rings: The Two Towers</title>
     <meta name="description" content="The iconic orc head on a stick from Lord of the Rings: The Two Towers, a grim warning left by the Uruk-hai at Amon Hen.">
     <meta name="keywords" content="orc head, Lord of the Rings, The Two Towers, LOTR, Uruk-hai, Middle-earth, Peter Jackson, Tolkien">
@@ -18,9 +18,56 @@
     <meta name="twitter:description" content="The iconic orc head on a stick from Lord of the Rings: The Two Towers.">
     <meta name="twitter:image" content="assets/a454ddfc-e411-4010-a0db-6b820f3402cf.jpeg">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <img src="assets/a454ddfc-e411-4010-a0db-6b820f3402cf.jpeg" alt="Orc head mounted on a wooden stake from Lord of the Rings: The Two Towers">
+    <!-- Main Orc Head -->
+    <img
+        id="orc-head"
+        src="assets/a454ddfc-e411-4010-a0db-6b820f3402cf.jpeg"
+        alt="Orc head mounted on a wooden stake from Lord of the Rings: The Two Towers"
+        draggable="false"
+    >
+
+    <!-- Quote Overlay -->
+    <div id="quote-overlay" class="quote-overlay" aria-live="polite"></div>
+
+    <!-- Stats Panel (Bottom Left) -->
+    <div class="stats-panel">
+        <div class="stat-item">
+            <span class="stat-label">Orcs Slain:</span>
+            <span id="kill-counter" class="stat-value">0</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">Second Breakfasts:</span>
+            <span class="stat-value">NONE</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-label">Hobbits Taken:</span>
+            <span class="stat-value">2</span>
+        </div>
+    </div>
+
+    <!-- Visitor Counter (Bottom Right) -->
+    <div class="visitor-counter">
+        <div class="visitor-label">VISITORS</div>
+        <div id="visitor-counter" class="visitor-lcd">000000</div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <button id="btn-summon" class="action-btn">Summon Uruk</button>
+        <button id="btn-horn" class="action-btn">Sound Horn</button>
+        <button id="btn-chaos" class="action-btn">Disable Chaos</button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/chaos-engine.js"></script>
+    <script src="scripts/easter-eggs.js"></script>
+    <script src="scripts/main.js"></script>
 </body>
 </html>
