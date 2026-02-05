@@ -807,6 +807,222 @@ body {
 .party-orc-clone:nth-child(6) { --hue: 30deg; }
 
 /* ===========================================
+   PIPPIN - FOOL OF A TOOK (Moria)
+   =========================================== */
+
+.moria-rumble {
+    animation: moria-shake 0.2s ease-in-out infinite;
+    background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%) !important;
+}
+
+@keyframes moria-shake {
+    0%, 100% { transform: translateX(0) translateY(0); }
+    25% { transform: translateX(-3px) translateY(2px); }
+    50% { transform: translateX(3px) translateY(-2px); }
+    75% { transform: translateX(-2px) translateY(1px); }
+}
+
+@keyframes bucket-fall {
+    0% { top: 30%; opacity: 1; transform: rotate(0deg); }
+    100% { top: 120%; opacity: 0; transform: rotate(360deg); }
+}
+
+.falling-bucket {
+    position: fixed;
+    left: 50%;
+    top: 30%;
+    font-size: 3rem;
+    animation: bucket-fall 2s ease-in forwards;
+    z-index: 1500;
+    pointer-events: none;
+}
+
+.falling-skeleton {
+    position: fixed;
+    left: 52%;
+    top: 35%;
+    font-size: 2.5rem;
+    animation: bucket-fall 2.5s ease-in forwards;
+    z-index: 1500;
+    pointer-events: none;
+}
+
+/* ===========================================
+   PIPPIN - PALANTIR
+   =========================================== */
+
+.palantir-mode {
+    background: radial-gradient(circle at center, #1a0a0a 0%, #000 100%) !important;
+}
+
+.palantir-gaze {
+    filter: brightness(0.5) saturate(2) hue-rotate(-20deg);
+    animation: palantir-pulse 0.5s ease-in-out infinite;
+}
+
+@keyframes palantir-pulse {
+    0%, 100% { filter: brightness(0.5) saturate(2); }
+    50% { filter: brightness(0.8) saturate(3) drop-shadow(0 0 30px #ff4500); }
+}
+
+.sauron-eye {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 100px;
+    background: radial-gradient(ellipse, #ff4500 0%, #ff0000 30%, #8b0000 60%, transparent 70%);
+    border-radius: 50%;
+    animation: sauron-eye-look 1s ease-in-out infinite;
+    z-index: 1500;
+    pointer-events: none;
+    box-shadow: 0 0 60px 30px rgba(255, 69, 0, 0.5);
+}
+
+.sauron-eye::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 80px;
+    background: #000;
+    border-radius: 50%;
+}
+
+@keyframes sauron-eye-look {
+    0%, 100% { transform: translate(-50%, -50%) scaleY(1); }
+    50% { transform: translate(-50%, -50%) scaleY(0.8); }
+}
+
+/* ===========================================
+   PIPPIN - BEACON
+   =========================================== */
+
+.beacon-mode {
+    background: linear-gradient(180deg, #0a0a1a 0%, #1a1a2a 100%) !important;
+}
+
+.beacon-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1500;
+}
+
+@keyframes beacon-ignite {
+    0% { opacity: 0; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1.5); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.beacon-fire {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle, #ffff00 0%, #ff8c00 40%, #ff4500 70%, transparent 100%);
+    border-radius: 50%;
+    animation: beacon-ignite 0.5s ease-out forwards, beacon-flicker 0.3s ease-in-out infinite 0.5s;
+    box-shadow: 0 0 40px 20px rgba(255, 140, 0, 0.6);
+}
+
+/* ===========================================
+   PIPPIN - TOMATO (Denethor eating)
+   =========================================== */
+
+.tomato-mode {
+    background: linear-gradient(180deg, #2a1a1a 0%, #1a0a0a 100%) !important;
+}
+
+.tomato-splatter {
+    filter: saturate(1.5) contrast(1.1);
+}
+
+.tomato-splatter::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 40%, rgba(255, 0, 0, 0.3) 0%, transparent 30%),
+                radial-gradient(circle at 70% 60%, rgba(255, 0, 0, 0.2) 0%, transparent 25%);
+    pointer-events: none;
+}
+
+@keyframes tomato-fly {
+    0% { top: -50px; transform: rotate(0deg); }
+    100% { top: 110vh; transform: rotate(720deg); }
+}
+
+.flying-tomato {
+    position: fixed;
+    font-size: 2rem;
+    animation: tomato-fly 2s ease-in forwards;
+    z-index: 1500;
+    pointer-events: none;
+}
+
+/* ===========================================
+   PIPPIN - DENETHOR (Sad song)
+   =========================================== */
+
+.denethor-mode {
+    background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%) !important;
+    transition: background 1s ease;
+}
+
+.denethor-sad {
+    filter: grayscale(0.7) brightness(0.7);
+    animation: denethor-sorrow 3s ease-in-out infinite;
+}
+
+@keyframes denethor-sorrow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10px); }
+}
+
+/* ===========================================
+   PIPPIN - INTELLIGENCE
+   =========================================== */
+
+@keyframes pippin-confused {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+}
+
+.pippin-confused {
+    animation: pippin-confused 0.3s ease-in-out 5;
+}
+
+/* ===========================================
+   MORIA MODE
+   =========================================== */
+
+.moria-mode {
+    background: #000 !important;
+}
+
+.moria-drums {
+    animation: moria-drums-beat 0.5s ease-in-out infinite;
+}
+
+@keyframes moria-drums-beat {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(0.6); }
+}
+
+.moria-dread {
+    filter: brightness(0.5) contrast(1.2);
+    animation: moria-dread-pulse 1s ease-in-out infinite;
+}
+
+@keyframes moria-dread-pulse {
+    0%, 100% { filter: brightness(0.5) contrast(1.2); }
+    50% { filter: brightness(0.7) contrast(1.3) drop-shadow(0 0 20px #ff4500); }
+}
+
+/* ===========================================
    BERSERKER MODE (Rapid Clicking)
    =========================================== */
 

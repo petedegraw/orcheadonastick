@@ -45,7 +45,15 @@ const EasterEggs = {
         'rohan': 'rohan-mode',
         'one': 'one-ring-mode',
         'sauron': 'sauron-mode',
-        'party': 'party-mode'
+        'party': 'party-mode',
+        'pippin': 'pippin-mode',
+        'took': 'pippin-mode',
+        'palantir': 'palantir-mode',
+        'beacon': 'beacon-mode',
+        'tomato': 'tomato-mode',
+        'denethor': 'denethor-mode',
+        'intelligence': 'intelligence-mode',
+        'moria': 'moria-mode'
     },
 
     currentPhrase: '',
@@ -275,6 +283,27 @@ const EasterEggs = {
                 break;
             case 'party-mode':
                 this.activateParty();
+                break;
+            case 'pippin-mode':
+                this.activatePippin();
+                break;
+            case 'palantir-mode':
+                this.activatePalantir();
+                break;
+            case 'beacon-mode':
+                this.activateBeacon();
+                break;
+            case 'tomato-mode':
+                this.activateTomato();
+                break;
+            case 'denethor-mode':
+                this.activateDenethor();
+                break;
+            case 'intelligence-mode':
+                this.activateIntelligence();
+                break;
+            case 'moria-mode':
+                this.activateMoria();
                 break;
         }
     },
@@ -811,6 +840,279 @@ const EasterEggs = {
             clone.style.top = Math.random() * 60 + 20 + '%';
             clone.style.animationDelay = Math.random() * 0.5 + 's';
             document.body.appendChild(clone);
+        }
+    },
+
+    // =========================================
+    // PIPPIN TOOK EASTER EGGS
+    // =========================================
+
+    activatePippin() {
+        // Fool of a Took!
+        document.body.classList.add('moria-rumble');
+        this.showNotification('Fool of a Took!');
+
+        // Drop the bucket
+        this.dropBucket();
+
+        setTimeout(() => {
+            this.showNotification('Throw yourself in next time and rid us of your stupidity!');
+        }, 2000);
+
+        setTimeout(() => {
+            this.showNotification('...Drums. Drums in the deep.');
+            this.playDrums();
+        }, 4500);
+
+        setTimeout(() => {
+            this.showNotification('They are coming.');
+        }, 6500);
+
+        setTimeout(() => {
+            document.body.classList.remove('moria-rumble');
+            this.stopDrums();
+        }, 8000);
+    },
+
+    dropBucket() {
+        const bucket = document.createElement('div');
+        bucket.className = 'falling-bucket';
+        bucket.innerHTML = '🪣';
+        document.body.appendChild(bucket);
+
+        // Add skeleton and chain
+        setTimeout(() => {
+            const skeleton = document.createElement('div');
+            skeleton.className = 'falling-skeleton';
+            skeleton.innerHTML = '💀⛓️';
+            document.body.appendChild(skeleton);
+            setTimeout(() => skeleton.remove(), 3000);
+        }, 300);
+
+        setTimeout(() => bucket.remove(), 3000);
+    },
+
+    activatePalantir() {
+        const orcHead = document.getElementById('orc-head');
+        document.body.classList.add('palantir-mode');
+
+        this.showNotification('I see you...');
+
+        if (orcHead) {
+            orcHead.classList.add('palantir-gaze');
+        }
+
+        // Sauron's eye appears
+        const eye = document.createElement('div');
+        eye.className = 'sauron-eye';
+        document.body.appendChild(eye);
+
+        setTimeout(() => {
+            this.showNotification('There is no life in the void... only death.');
+        }, 2000);
+
+        setTimeout(() => {
+            this.showNotification('Tell me... where is the Ring?');
+        }, 4000);
+
+        setTimeout(() => {
+            document.body.classList.remove('palantir-mode');
+            if (orcHead) orcHead.classList.remove('palantir-gaze');
+            eye.remove();
+        }, 6000);
+    },
+
+    activateBeacon() {
+        document.body.classList.add('beacon-mode');
+        this.showNotification('*Pippin climbs to the beacon*');
+
+        // Spawn multiple beacons lighting up
+        const beaconContainer = document.createElement('div');
+        beaconContainer.className = 'beacon-container';
+        document.body.appendChild(beaconContainer);
+
+        const beaconPositions = [
+            { left: '10%', top: '20%', delay: 0 },
+            { left: '25%', top: '15%', delay: 500 },
+            { left: '40%', top: '10%', delay: 1000 },
+            { left: '55%', top: '12%', delay: 1500 },
+            { left: '70%', top: '18%', delay: 2000 },
+            { left: '85%', top: '25%', delay: 2500 }
+        ];
+
+        beaconPositions.forEach((pos, i) => {
+            setTimeout(() => {
+                const beacon = document.createElement('div');
+                beacon.className = 'beacon-fire';
+                beacon.style.left = pos.left;
+                beacon.style.top = pos.top;
+                beaconContainer.appendChild(beacon);
+
+                if (i === 0) {
+                    this.showNotification('The beacon! The beacon of Amon Dîn is lit!');
+                }
+            }, pos.delay);
+        });
+
+        setTimeout(() => {
+            this.showNotification('Hope is kindled!');
+        }, 3500);
+
+        setTimeout(() => {
+            document.body.classList.remove('beacon-mode');
+            beaconContainer.remove();
+        }, 6000);
+    },
+
+    activateTomato() {
+        const orcHead = document.getElementById('orc-head');
+        document.body.classList.add('tomato-mode');
+
+        // Tomato juice dripping effect
+        this.showNotification('*disturbing eating sounds*');
+
+        if (orcHead) {
+            orcHead.classList.add('tomato-splatter');
+        }
+
+        // Spawn tomatoes
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                const tomato = document.createElement('div');
+                tomato.className = 'flying-tomato';
+                tomato.innerHTML = '🍅';
+                tomato.style.left = Math.random() * 80 + 10 + '%';
+                document.body.appendChild(tomato);
+                setTimeout(() => tomato.remove(), 2000);
+            }, i * 300);
+        }
+
+        setTimeout(() => {
+            this.showNotification('Bring him some food. And wine.');
+        }, 2000);
+
+        setTimeout(() => {
+            document.body.classList.remove('tomato-mode');
+            if (orcHead) orcHead.classList.remove('tomato-splatter');
+        }, 5000);
+    },
+
+    activateDenethor() {
+        document.body.classList.add('denethor-mode');
+        const orcHead = document.getElementById('orc-head');
+
+        if (orcHead) {
+            orcHead.classList.add('denethor-sad');
+        }
+
+        // Show video after a short delay
+        setTimeout(() => {
+            this.showDenethorVideo();
+        }, 300);
+
+        setTimeout(() => {
+            document.body.classList.remove('denethor-mode');
+            if (orcHead) orcHead.classList.remove('denethor-sad');
+        }, 13000);
+    },
+
+    showDenethorVideo() {
+        const modal = document.getElementById('denethor-modal');
+        const container = document.getElementById('denethor-video-container');
+        const closeBtn = document.getElementById('denethor-close');
+
+        if (!modal || !container) return;
+
+        // Insert the iframe with autoplay
+        container.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/5DPEfwXA9MY?si=hu0PEBexTpBqzLw1&start=9&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+
+        modal.classList.add('visible');
+
+        // Close button handler
+        const closeModal = () => {
+            modal.classList.remove('visible');
+            container.innerHTML = ''; // Stop the video
+            closeBtn.removeEventListener('click', closeModal);
+            modal.removeEventListener('click', handleBackdropClick);
+            document.removeEventListener('keydown', handleEscape);
+        };
+
+        const handleBackdropClick = (e) => {
+            if (e.target === modal) closeModal();
+        };
+
+        const handleEscape = (e) => {
+            if (e.key === 'Escape') closeModal();
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', handleBackdropClick);
+        document.addEventListener('keydown', handleEscape);
+    },
+
+    activateIntelligence() {
+        const orcHead = document.getElementById('orc-head');
+
+        this.showNotification('It\'s a dangerous business, Frodo, going out your door.');
+
+        setTimeout(() => {
+            this.showNotification('You need people of intelligence on this sort of... mission... quest... thing.');
+        }, 2500);
+
+        setTimeout(() => {
+            this.showNotification('Well, that rules you out, Pip.');
+        }, 5500);
+
+        if (orcHead) {
+            orcHead.classList.add('pippin-confused');
+            setTimeout(() => orcHead.classList.remove('pippin-confused'), 7000);
+        }
+    },
+
+    activateMoria() {
+        document.body.classList.add('moria-mode');
+        const orcHead = document.getElementById('orc-head');
+
+        this.showNotification('The Mines of Moria...');
+
+        setTimeout(() => {
+            this.showNotification('We cannot get out...');
+        }, 2000);
+
+        setTimeout(() => {
+            this.showNotification('They have taken the bridge and Second Hall.');
+        }, 4000);
+
+        setTimeout(() => {
+            document.body.classList.add('moria-drums');
+            this.showNotification('DRUMS... DRUMS IN THE DEEP.');
+            this.playDrums();
+        }, 6000);
+
+        if (orcHead) {
+            orcHead.classList.add('moria-dread');
+        }
+
+        setTimeout(() => {
+            document.body.classList.remove('moria-mode', 'moria-drums');
+            if (orcHead) orcHead.classList.remove('moria-dread');
+            this.stopDrums();
+        }, 9000);
+    },
+
+    playDrums() {
+        const drumsSound = document.getElementById('drums-sound');
+        if (drumsSound) {
+            drumsSound.currentTime = 0;
+            drumsSound.play().catch(() => {});
+        }
+    },
+
+    stopDrums() {
+        const drumsSound = document.getElementById('drums-sound');
+        if (drumsSound) {
+            drumsSound.pause();
+            drumsSound.currentTime = 0;
         }
     },
 
