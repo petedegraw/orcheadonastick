@@ -25,7 +25,27 @@ const EasterEggs = {
         'mordor': 'mordor-mode',
         'aragorn': 'aragorn-mode',
         'fool': 'fool-mode',
-        'nazgul': 'nazgul-mode'
+        'nazgul': 'nazgul-mode',
+        'boromir': 'boromir-mode',
+        'legolas': 'legolas-mode',
+        'gimli': 'gimli-mode',
+        'axe': 'gimli-mode',
+        'sam': 'sam-mode',
+        'frodo': 'frodo-mode',
+        'gollum': 'gollum-mode',
+        'smeagol': 'gollum-mode',
+        'shire': 'shire-mode',
+        'breakfast': 'breakfast-mode',
+        'elevenses': 'breakfast-mode',
+        'second': 'breakfast-mode',
+        'meat': 'meat-mode',
+        'menu': 'meat-mode',
+        'toss': 'toss-mode',
+        'gondor': 'gondor-mode',
+        'rohan': 'rohan-mode',
+        'one': 'one-ring-mode',
+        'sauron': 'sauron-mode',
+        'party': 'party-mode'
     },
 
     currentPhrase: '',
@@ -210,6 +230,51 @@ const EasterEggs = {
                 break;
             case 'nazgul-mode':
                 this.activateNazgul();
+                break;
+            case 'boromir-mode':
+                this.activateBoromir();
+                break;
+            case 'legolas-mode':
+                this.activateLegolas();
+                break;
+            case 'gimli-mode':
+                this.activateGimli();
+                break;
+            case 'sam-mode':
+                this.activateSam();
+                break;
+            case 'frodo-mode':
+                this.activateFrodo();
+                break;
+            case 'gollum-mode':
+                this.activateGollum();
+                break;
+            case 'shire-mode':
+                this.activateShire();
+                break;
+            case 'breakfast-mode':
+                this.activateBreakfast();
+                break;
+            case 'meat-mode':
+                this.activateMeat();
+                break;
+            case 'toss-mode':
+                this.activateToss();
+                break;
+            case 'gondor-mode':
+                this.activateGondor();
+                break;
+            case 'rohan-mode':
+                this.activateRohan();
+                break;
+            case 'one-ring-mode':
+                this.activateOneRing();
+                break;
+            case 'sauron-mode':
+                this.activateSauronEaster();
+                break;
+            case 'party-mode':
+                this.activateParty();
                 break;
         }
     },
@@ -429,6 +494,246 @@ const EasterEggs = {
             document.body.classList.remove('nazgul-mode');
             if (orcHead) orcHead.classList.remove('nazgul-flicker');
         }, 4000);
+    },
+
+    activateBoromir() {
+        const orcHead = document.getElementById('orc-head');
+        if (!orcHead) return;
+
+        orcHead.classList.add('boromir-arrows');
+        this.showNotification('One does not simply walk into Mordor...');
+
+        setTimeout(() => {
+            this.showNotification('They have a cave troll.');
+        }, 2000);
+
+        setTimeout(() => {
+            orcHead.classList.remove('boromir-arrows');
+        }, 5000);
+    },
+
+    activateLegolas() {
+        const orcHead = document.getElementById('orc-head');
+        if (!orcHead) return;
+
+        orcHead.classList.add('legolas-surf');
+        this.showNotification('That still only counts as one!');
+
+        setTimeout(() => {
+            orcHead.classList.remove('legolas-surf');
+        }, 3000);
+    },
+
+    activateGimli() {
+        const orcHead = document.getElementById('orc-head');
+        if (!orcHead) return;
+
+        document.body.classList.add('gimli-shake');
+        this.showNotification('AND MY AXE!');
+
+        setTimeout(() => {
+            document.body.classList.remove('gimli-shake');
+        }, 1500);
+    },
+
+    activateSam() {
+        const orcHead = document.getElementById('orc-head');
+        if (!orcHead) return;
+
+        orcHead.classList.add('sam-carry');
+        this.showNotification('I can\'t carry it for you... but I can carry you!');
+
+        setTimeout(() => {
+            orcHead.classList.remove('sam-carry');
+        }, 3000);
+    },
+
+    activateFrodo() {
+        document.body.classList.add('frodo-charge');
+        this.showNotification('For Frodo.');
+
+        setTimeout(() => {
+            document.body.classList.remove('frodo-charge');
+        }, 3000);
+    },
+
+    activateGollum() {
+        const orcHead = document.getElementById('orc-head');
+        if (!orcHead) return;
+
+        // Personality split effect
+        let count = 0;
+        const interval = setInterval(() => {
+            orcHead.classList.toggle('gollum-glow');
+            orcHead.classList.toggle('smeagol-normal');
+            count++;
+            if (count >= 8) {
+                clearInterval(interval);
+                orcHead.classList.remove('gollum-glow', 'smeagol-normal');
+            }
+        }, 400);
+
+        this.showNotification('We wants it, we needs it. Must have the precious!');
+    },
+
+    activateShire() {
+        document.body.classList.add('shire-mode');
+        this.showNotification('The Shire... home.');
+
+        const orcHead = document.getElementById('orc-head');
+        if (orcHead) {
+            orcHead.classList.add('shire-peace');
+        }
+
+        setTimeout(() => {
+            document.body.classList.remove('shire-mode');
+            if (orcHead) orcHead.classList.remove('shire-peace');
+        }, 5000);
+    },
+
+    activateBreakfast() {
+        this.showNotification('What about second breakfast?');
+
+        setTimeout(() => {
+            this.showNotification('I don\'t think he knows about second breakfast, Pip.');
+        }, 2500);
+
+        setTimeout(() => {
+            this.showNotification('What about elevenses? Luncheon? Afternoon tea?');
+        }, 5000);
+    },
+
+    activateMeat() {
+        document.body.classList.add('meat-mode');
+        this.showNotification('LOOKS LIKE MEAT\'S BACK ON THE MENU, BOYS!');
+
+        const orcHead = document.getElementById('orc-head');
+        if (orcHead) {
+            orcHead.classList.add('uruk-rage');
+            setTimeout(() => orcHead.classList.remove('uruk-rage'), 500);
+        }
+
+        setTimeout(() => {
+            document.body.classList.remove('meat-mode');
+        }, 3000);
+    },
+
+    activateToss() {
+        const orcHead = document.getElementById('orc-head');
+        if (!orcHead) return;
+
+        this.showNotification('Nobody tosses a dwarf!');
+
+        setTimeout(() => {
+            orcHead.classList.add('dwarf-toss');
+            setTimeout(() => {
+                this.showNotification('Not a word.');
+            }, 1000);
+        }, 1000);
+
+        setTimeout(() => {
+            orcHead.classList.remove('dwarf-toss');
+        }, 3000);
+    },
+
+    activateGondor() {
+        document.body.classList.add('gondor-mode');
+        this.showNotification('The beacons are lit! Gondor calls for aid!');
+
+        setTimeout(() => {
+            this.showNotification('And Rohan will answer.');
+        }, 2500);
+
+        setTimeout(() => {
+            document.body.classList.remove('gondor-mode');
+        }, 5000);
+    },
+
+    activateRohan() {
+        document.body.classList.add('rohan-mode');
+        this.showNotification('Arise, arise, Riders of Théoden!');
+
+        const orcHead = document.getElementById('orc-head');
+        if (orcHead) {
+            orcHead.classList.add('rohan-charge');
+        }
+
+        setTimeout(() => {
+            this.showNotification('Forth Eorlingas!');
+        }, 2000);
+
+        setTimeout(() => {
+            document.body.classList.remove('rohan-mode');
+            if (orcHead) orcHead.classList.remove('rohan-charge');
+        }, 4000);
+    },
+
+    activateOneRing() {
+        document.body.classList.add('one-ring-mode');
+        const orcHead = document.getElementById('orc-head');
+
+        this.showNotification('One Ring to rule them all...');
+
+        setTimeout(() => {
+            this.showNotification('One Ring to find them...');
+        }, 2000);
+
+        setTimeout(() => {
+            this.showNotification('One Ring to bring them all, and in the darkness bind them.');
+        }, 4000);
+
+        if (orcHead) {
+            orcHead.classList.add('ring-pulse');
+        }
+
+        setTimeout(() => {
+            document.body.classList.remove('one-ring-mode');
+            if (orcHead) orcHead.classList.remove('ring-pulse');
+        }, 7000);
+    },
+
+    activateSauronEaster() {
+        document.body.classList.add('sauron-mode');
+        this.showNotification('THE EYE OF SAURON SEES ALL');
+
+        const orcHead = document.getElementById('orc-head');
+        if (orcHead) {
+            orcHead.classList.add('possessed-spin');
+        }
+
+        setTimeout(() => {
+            document.body.classList.remove('sauron-mode');
+            if (orcHead) orcHead.classList.remove('possessed-spin');
+        }, 5000);
+    },
+
+    activateParty() {
+        // PARTY MODE - everything at once!
+        const effects = ['sauron-pulse', 'screen-shake'];
+        const orcHead = document.getElementById('orc-head');
+
+        document.body.classList.add('party-mode');
+        this.showNotification('PARTY IN THE SHIRE!');
+
+        if (orcHead) {
+            const animations = ['possessed-spin', 'isengard-bounce', 'potatoes-bounce'];
+            let i = 0;
+            const interval = setInterval(() => {
+                orcHead.className = 'party-orc';
+                orcHead.classList.add(animations[i % animations.length]);
+                i++;
+            }, 500);
+
+            setTimeout(() => {
+                clearInterval(interval);
+                orcHead.className = '';
+                orcHead.id = 'orc-head';
+            }, 5000);
+        }
+
+        setTimeout(() => {
+            document.body.classList.remove('party-mode');
+        }, 5000);
     },
 
     showNotification(message) {
