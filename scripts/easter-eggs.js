@@ -246,9 +246,48 @@ const EasterEggs = {
         orcHead.classList.add('isengard-bounce');
         this.showNotification('They\'re taking the hobbits to Isengard!');
 
+        // Show video after a short delay
+        setTimeout(() => {
+            this.showIsengardVideo();
+        }, 800);
+
         setTimeout(() => {
             orcHead.classList.remove('isengard-bounce');
         }, 5000);
+    },
+
+    showIsengardVideo() {
+        const modal = document.getElementById('isengard-modal');
+        const container = document.getElementById('isengard-video-container');
+        const closeBtn = document.getElementById('isengard-close');
+
+        if (!modal || !container) return;
+
+        // Insert the iframe with autoplay
+        container.innerHTML = '<iframe width="560" height="315" src="https://www.youtube.com/embed/uE-1RPDqJAY?si=ssC57roBHfcMLIbO&start=2&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+
+        modal.classList.add('visible');
+
+        // Close button handler
+        const closeModal = () => {
+            modal.classList.remove('visible');
+            container.innerHTML = ''; // Stop the video
+            closeBtn.removeEventListener('click', closeModal);
+            modal.removeEventListener('click', handleBackdropClick);
+            document.removeEventListener('keydown', handleEscape);
+        };
+
+        const handleBackdropClick = (e) => {
+            if (e.target === modal) closeModal();
+        };
+
+        const handleEscape = (e) => {
+            if (e.key === 'Escape') closeModal();
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', handleBackdropClick);
+        document.addEventListener('keydown', handleEscape);
     },
 
     activatePrecious() {

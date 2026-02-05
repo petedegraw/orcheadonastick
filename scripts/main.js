@@ -43,6 +43,7 @@ const OrcHead = {
         this.setupQuoteSystem();
         this.setupButtons();
         this.incrementVisitorCount();
+        this.setupAttribution();
 
         // Initialize other modules
         if (window.ChaosEngine) {
@@ -164,6 +165,18 @@ const OrcHead = {
         }
     },
 
+    setupAttribution() {
+        const toggle = document.getElementById('attribution-toggle');
+        const content = document.getElementById('attribution-content');
+
+        if (toggle && content) {
+            toggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                content.classList.toggle('visible');
+            });
+        }
+    },
+
     setupButtons() {
         const summonBtn = document.getElementById('btn-summon');
         const hornBtn = document.getElementById('btn-horn');
@@ -182,6 +195,16 @@ const OrcHead = {
             hornBtn.addEventListener('click', () => {
                 this.showQuote('The Horn of Helm Hammerhand shall sound in the deep!');
                 document.body.classList.add('horn-blast');
+
+                // Play horn sound
+                const hornSound = document.getElementById('horn-sound');
+                if (hornSound) {
+                    hornSound.currentTime = 0;
+                    hornSound.play().catch(() => {
+                        // Audio play failed (e.g., no user interaction yet)
+                    });
+                }
+
                 setTimeout(() => {
                     document.body.classList.remove('horn-blast');
                 }, 1500);

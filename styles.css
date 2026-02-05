@@ -676,6 +676,112 @@ body {
 }
 
 /* ===========================================
+   VIDEO MODAL
+   =========================================== */
+
+.video-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-modal.visible {
+    display: flex;
+}
+
+.video-modal-content {
+    position: relative;
+    width: 90vw;
+    max-width: 800px;
+}
+
+.video-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 10;
+    padding: 5px 15px;
+}
+
+.video-close:hover {
+    color: #ffd700;
+}
+
+#isengard-video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+#isengard-video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ===========================================
+   ATTRIBUTION
+   =========================================== */
+
+.attribution {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    text-align: center;
+}
+
+.attribution a {
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 0.7rem;
+    text-decoration: none;
+}
+
+.attribution a:hover {
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.attribution-content {
+    display: none;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-top: 5px;
+    font-size: 0.7rem;
+}
+
+.attribution-content.visible {
+    display: block;
+}
+
+.attribution-content p {
+    margin: 0;
+    color: #ccc;
+}
+
+.attribution-content a {
+    color: #ffd700;
+}
+
+.attribution-content a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* ===========================================
    REDUCED MOTION
    =========================================== */
 
