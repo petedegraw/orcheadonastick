@@ -13,7 +13,19 @@ const EasterEggs = {
         'grond': 'grond-mode',
         'isengard': 'isengard-mode',
         'precious': 'precious-mode',
-        'mellon': 'mellon-mode'
+        'mellon': 'mellon-mode',
+        'gandalf': 'gandalf-mode',
+        'ring': 'ring-mode',
+        'death': 'death-mode',
+        'theoden': 'death-mode',
+        'balrog': 'balrog-mode',
+        'eagles': 'eagles-mode',
+        'potatoes': 'potatoes-mode',
+        'taters': 'potatoes-mode',
+        'mordor': 'mordor-mode',
+        'aragorn': 'aragorn-mode',
+        'fool': 'fool-mode',
+        'nazgul': 'nazgul-mode'
     },
 
     currentPhrase: '',
@@ -23,6 +35,10 @@ const EasterEggs = {
     helmsDeepActive: false,
     hoverTimeout: null,
 
+    // Rapid click tracking
+    clickTimes: [],
+    idleTimeout: null,
+
     init() {
         this.setupKonamiCode();
         this.setupSecretPhrases();
@@ -30,6 +46,8 @@ const EasterEggs = {
         this.setupBeforeUnload();
         this.setupShakeDetection();
         this.setupSwipeGestures();
+        this.setupRapidClick();
+        this.setupIdleTimer();
     },
 
     setupKonamiCode() {
@@ -163,6 +181,36 @@ const EasterEggs = {
             case 'mellon-mode':
                 this.activateMellon();
                 break;
+            case 'gandalf-mode':
+                this.activateGandalf();
+                break;
+            case 'ring-mode':
+                this.activateRing();
+                break;
+            case 'death-mode':
+                this.activateDeath();
+                break;
+            case 'balrog-mode':
+                this.activateBalrog();
+                break;
+            case 'eagles-mode':
+                this.activateEagles();
+                break;
+            case 'potatoes-mode':
+                this.activatePotatoes();
+                break;
+            case 'mordor-mode':
+                this.activateMordor();
+                break;
+            case 'aragorn-mode':
+                this.activateAragorn();
+                break;
+            case 'fool-mode':
+                this.activateFool();
+                break;
+            case 'nazgul-mode':
+                this.activateNazgul();
+                break;
         }
     },
 
@@ -221,6 +269,126 @@ const EasterEggs = {
 
         setTimeout(() => {
             document.body.classList.remove('mellon-reveal');
+        }, 4000);
+    },
+
+    activateGandalf() {
+        document.body.classList.add('gandalf-flash');
+        this.showNotification('YOU SHALL NOT PASS!');
+
+        setTimeout(() => {
+            document.body.classList.remove('gandalf-flash');
+        }, 1500);
+    },
+
+    activateRing() {
+        const orcHead = document.getElementById('orc-head');
+        if (!orcHead) return;
+
+        orcHead.classList.add('ring-invisible');
+        this.showNotification('The ring has taken him...');
+
+        setTimeout(() => {
+            orcHead.classList.remove('ring-invisible');
+        }, 3000);
+    },
+
+    activateDeath() {
+        document.body.classList.add('death-charge');
+        this.showNotification('DEATH!!!');
+
+        const orcHead = document.getElementById('orc-head');
+        if (orcHead) {
+            orcHead.classList.add('uruk-rage');
+            setTimeout(() => orcHead.classList.remove('uruk-rage'), 500);
+        }
+
+        setTimeout(() => {
+            document.body.classList.remove('death-charge');
+        }, 2000);
+    },
+
+    activateBalrog() {
+        const orcHead = document.getElementById('orc-head');
+        if (!orcHead) return;
+
+        orcHead.classList.add('balrog-fire');
+        document.body.classList.add('balrog-bg');
+        this.showNotification('What is this new devilry?');
+
+        setTimeout(() => {
+            orcHead.classList.remove('balrog-fire');
+            document.body.classList.remove('balrog-bg');
+        }, 4000);
+    },
+
+    activateEagles() {
+        const orcHead = document.getElementById('orc-head');
+        if (!orcHead) return;
+
+        orcHead.classList.add('eagles-fly');
+        this.showNotification('The Eagles are coming!');
+
+        setTimeout(() => {
+            orcHead.classList.remove('eagles-fly');
+        }, 2000);
+    },
+
+    activatePotatoes() {
+        this.showNotification('PO-TA-TOES! Boil \'em, mash \'em, stick \'em in a stew!');
+
+        const orcHead = document.getElementById('orc-head');
+        if (orcHead) {
+            orcHead.classList.add('potatoes-bounce');
+            setTimeout(() => orcHead.classList.remove('potatoes-bounce'), 2000);
+        }
+    },
+
+    activateMordor() {
+        document.body.classList.add('mordor-mode');
+        this.showNotification('One does not simply walk into Mordor...');
+
+        setTimeout(() => {
+            document.body.classList.remove('mordor-mode');
+        }, 5000);
+    },
+
+    activateAragorn() {
+        const orcHead = document.getElementById('orc-head');
+        if (!orcHead) return;
+
+        orcHead.classList.add('aragorn-crown');
+        this.showNotification('You bow to no one.');
+
+        setTimeout(() => {
+            orcHead.classList.remove('aragorn-crown');
+        }, 4000);
+    },
+
+    activateFool() {
+        const orcHead = document.getElementById('orc-head');
+        if (!orcHead) return;
+
+        orcHead.classList.add('fool-fall');
+        this.showNotification('Fly, you fools!');
+
+        setTimeout(() => {
+            orcHead.classList.remove('fool-fall');
+        }, 2000);
+    },
+
+    activateNazgul() {
+        document.body.classList.add('nazgul-mode');
+        this.showNotification('I see you...');
+
+        const orcHead = document.getElementById('orc-head');
+        if (orcHead) {
+            orcHead.classList.add('nazgul-flicker');
+        }
+
+        setTimeout(() => {
+            document.body.classList.remove('nazgul-mode');
+            if (orcHead) orcHead.classList.remove('nazgul-flicker');
         }, 4000);
     },
 
@@ -284,6 +452,72 @@ const EasterEggs = {
                 }
             }
         }, { passive: true });
+    },
+
+    // Rapid clicking (10 clicks in 2 seconds) = Berserker mode
+    setupRapidClick() {
+        const orcHead = document.getElementById('orc-head');
+        if (!orcHead) return;
+
+        orcHead.addEventListener('click', () => {
+            const now = Date.now();
+            this.clickTimes.push(now);
+
+            // Keep only clicks from last 2 seconds
+            this.clickTimes = this.clickTimes.filter(t => now - t < 2000);
+
+            // 10 clicks in 2 seconds = berserker mode
+            if (this.clickTimes.length >= 10) {
+                this.activateBerserker();
+                this.clickTimes = [];
+            }
+        });
+    },
+
+    activateBerserker() {
+        const orcHead = document.getElementById('orc-head');
+        if (!orcHead) return;
+
+        document.body.classList.add('berserker-mode');
+        orcHead.classList.add('berserker-shake');
+        this.showNotification('BERSERKER RAGE!!!');
+
+        setTimeout(() => {
+            document.body.classList.remove('berserker-mode');
+            orcHead.classList.remove('berserker-shake');
+        }, 3000);
+    },
+
+    // Idle for 30 seconds = spooky message
+    setupIdleTimer() {
+        const resetIdle = () => {
+            if (this.idleTimeout) clearTimeout(this.idleTimeout);
+            this.idleTimeout = setTimeout(() => {
+                this.showIdleMessage();
+            }, 30000);
+        };
+
+        ['click', 'mousemove', 'keydown', 'touchstart'].forEach(event => {
+            document.addEventListener(event, resetIdle, { passive: true });
+        });
+
+        resetIdle();
+    },
+
+    showIdleMessage() {
+        const messages = [
+            'Is it secret? Is it safe?',
+            'The eye is always watching...',
+            'What do your elf eyes see?',
+            'Even the smallest orc head can change the course of the future.',
+            'All we have to decide is what to do with the time that is given us.',
+            'The orc head grows restless...'
+        ];
+        const message = messages[Math.floor(Math.random() * messages.length)];
+        this.showNotification(message);
+
+        // Reset the idle timer
+        this.setupIdleTimer();
     },
 
     // Mobile shake detection - shake phone to trigger GROND!

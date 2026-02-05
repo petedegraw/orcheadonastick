@@ -204,14 +204,9 @@ const OrcHead = {
                 const input = prompt('Speak, friend, and enter:');
                 if (input && window.EasterEggs) {
                     const phrase = input.toLowerCase().trim();
-                    const secretPhrases = {
-                        'grond': 'grond-mode',
-                        'isengard': 'isengard-mode',
-                        'precious': 'precious-mode',
-                        'mellon': 'mellon-mode'
-                    };
-                    if (secretPhrases[phrase]) {
-                        window.EasterEggs.activateSecretMode(secretPhrases[phrase]);
+                    const mode = window.EasterEggs.secretPhrases[phrase];
+                    if (mode) {
+                        window.EasterEggs.activateSecretMode(mode);
                     } else {
                         this.showQuote('The doors remain shut...');
                     }
