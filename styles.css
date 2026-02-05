@@ -665,26 +665,146 @@ body {
 }
 
 /* ===========================================
-   PARTY MODE
+   PARTY MODE - MAXIMUM CHAOS
    =========================================== */
 
 .party-mode {
-    animation: party-bg 0.2s ease-in-out infinite;
+    animation: party-bg 0.15s ease-in-out infinite, party-shake 0.1s ease-in-out infinite;
+    overflow: hidden;
 }
 
 @keyframes party-bg {
     0% { background-color: #ff0000; }
-    20% { background-color: #ff8000; }
-    40% { background-color: #ffff00; }
-    60% { background-color: #00ff00; }
-    80% { background-color: #0000ff; }
-    100% { background-color: #ff00ff; }
+    14% { background-color: #ff8000; }
+    28% { background-color: #ffff00; }
+    42% { background-color: #00ff00; }
+    57% { background-color: #00ffff; }
+    71% { background-color: #0000ff; }
+    85% { background-color: #ff00ff; }
+    100% { background-color: #ff0000; }
 }
 
-.party-orc {
-    max-height: 100%;
-    width: auto;
+@keyframes party-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px) rotate(-1deg); }
+    75% { transform: translateX(5px) rotate(1deg); }
 }
+
+/* Wild orc animation */
+@keyframes party-orc-wild {
+    0% { transform: scale(1) rotate(0deg); }
+    10% { transform: scale(1.2) rotate(10deg); }
+    20% { transform: scale(0.9) rotate(-15deg); }
+    30% { transform: scale(1.3) rotate(5deg) translateY(-20px); }
+    40% { transform: scale(1) rotate(-10deg); }
+    50% { transform: scale(1.1) rotate(15deg) translateX(30px); }
+    60% { transform: scale(0.8) rotate(-5deg); }
+    70% { transform: scale(1.2) rotate(20deg) translateX(-30px); }
+    80% { transform: scale(1) rotate(-15deg) translateY(20px); }
+    90% { transform: scale(1.15) rotate(10deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+.party-orc-wild {
+    animation: party-orc-wild 0.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px #ff00ff) drop-shadow(0 0 40px #00ffff);
+}
+
+/* Confetti */
+.confetti-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1500;
+    overflow: hidden;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0.8;
+    }
+}
+
+.confetti {
+    position: absolute;
+    top: -20px;
+    width: 10px;
+    height: 10px;
+    animation: confetti-fall 3s ease-in-out forwards;
+}
+
+.confetti:nth-child(odd) {
+    border-radius: 50%;
+}
+
+.confetti:nth-child(3n) {
+    width: 15px;
+    height: 8px;
+}
+
+.confetti:nth-child(5n) {
+    width: 8px;
+    height: 15px;
+}
+
+/* Floating text */
+@keyframes floating-text-pop {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(var(--rotation, 0deg));
+    }
+    30% {
+        opacity: 1;
+        transform: scale(1.3) rotate(var(--rotation, 0deg));
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.5) translateY(-50px) rotate(var(--rotation, 0deg));
+    }
+}
+
+.floating-text {
+    position: fixed;
+    font-family: 'Cinzel', Georgia, serif;
+    font-weight: 700;
+    color: #ffd700;
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000,
+                 0 0 20px #ff00ff, 0 0 40px #00ffff;
+    animation: floating-text-pop 2s ease-out forwards;
+    z-index: 1600;
+    pointer-events: none;
+}
+
+/* Clone orcs */
+@keyframes party-orc-clone-dance {
+    0%, 100% { transform: translate(-50%, -50%) scale(0.3) rotate(0deg); }
+    25% { transform: translate(-50%, -50%) scale(0.4) rotate(15deg); }
+    50% { transform: translate(-50%, -50%) scale(0.35) rotate(-15deg); }
+    75% { transform: translate(-50%, -50%) scale(0.4) rotate(10deg); }
+}
+
+.party-orc-clone {
+    position: fixed;
+    max-width: 150px;
+    height: auto;
+    transform: translate(-50%, -50%);
+    animation: party-orc-clone-dance 0.4s ease-in-out infinite;
+    filter: hue-rotate(var(--hue, 0deg)) drop-shadow(0 0 10px #fff);
+    z-index: 900;
+    pointer-events: none;
+}
+
+.party-orc-clone:nth-child(1) { --hue: 60deg; }
+.party-orc-clone:nth-child(2) { --hue: 120deg; }
+.party-orc-clone:nth-child(3) { --hue: 180deg; }
+.party-orc-clone:nth-child(4) { --hue: 240deg; }
+.party-orc-clone:nth-child(5) { --hue: 300deg; }
+.party-orc-clone:nth-child(6) { --hue: 30deg; }
 
 /* ===========================================
    BERSERKER MODE (Rapid Clicking)
@@ -766,8 +886,7 @@ body {
 
 .stats-panel {
     position: fixed;
-    bottom: 20px;
-    bottom: max(20px, env(safe-area-inset-bottom));
+    bottom: 80px;
     left: 20px;
     left: max(20px, env(safe-area-inset-left));
     background: rgba(0, 0, 0, 0.8);
@@ -805,8 +924,7 @@ body {
 
 .visitor-counter {
     position: fixed;
-    bottom: 20px;
-    bottom: max(20px, env(safe-area-inset-bottom));
+    bottom: 80px;
     right: 20px;
     right: max(20px, env(safe-area-inset-right));
     background: #1a1a1a;
@@ -968,53 +1086,84 @@ body {
 }
 
 /* ===========================================
-   ATTRIBUTION
+   FOOTER: DISCLAIMER & CREDITS
    =========================================== */
 
-.attribution {
+.site-footer {
     position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.85);
+    padding: 10px 20px;
     text-align: center;
+    z-index: 100;
+    border-top: 1px solid #8b4513;
 }
 
-.attribution a {
-    color: rgba(0, 0, 0, 0.5);
-    font-size: 0.7rem;
-    text-decoration: none;
+.disclaimer {
+    color: #999;
+    font-size: 0.65rem;
+    margin: 0 0 8px 0;
+    font-family: system-ui, -apple-system, sans-serif;
 }
 
-.attribution a:hover {
-    color: rgba(0, 0, 0, 0.8);
+.credits-toggle {
+    background: transparent;
+    border: 1px solid #8b4513;
+    color: #ffd700;
+    padding: 5px 15px;
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 0.75rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
 }
 
-.attribution-content {
+.credits-toggle:hover {
+    background: rgba(139, 69, 19, 0.3);
+    border-color: #ffd700;
+}
+
+.credits-content {
     display: none;
-    background: rgba(0, 0, 0, 0.9);
-    padding: 10px 15px;
+    background: rgba(0, 0, 0, 0.95);
+    padding: 15px;
+    margin-top: 10px;
     border-radius: 8px;
-    margin-top: 5px;
-    font-size: 0.7rem;
+    text-align: left;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.attribution-content.visible {
+.credits-content.visible {
     display: block;
 }
 
-.attribution-content p {
-    margin: 0;
+.credits-content p {
+    margin: 0 0 8px 0;
     color: #ccc;
+    font-size: 0.75rem;
+    font-family: system-ui, -apple-system, sans-serif;
 }
 
-.attribution-content a {
+.credits-content p:last-child {
+    margin-bottom: 0;
+}
+
+.credits-content a {
     color: #ffd700;
+    text-decoration: none;
 }
 
-.attribution-content a:hover {
+.credits-content a:hover {
     color: #fff;
     text-decoration: underline;
+}
+
+.credits-content strong {
+    color: #d4af37;
 }
 
 /* ===========================================
@@ -1044,14 +1193,14 @@ body {
 @media (max-width: 768px) {
     .stats-panel {
         left: 10px;
-        bottom: 10px;
+        bottom: 75px;
         padding: 10px 15px;
         font-size: 0.8rem;
     }
 
     .visitor-counter {
         right: 10px;
-        bottom: 10px;
+        bottom: 75px;
         padding: 8px 12px;
     }
 
@@ -1075,9 +1224,22 @@ body {
 }
 
 @media (max-width: 480px) {
+    .site-footer {
+        padding: 8px 10px;
+    }
+
+    .disclaimer {
+        font-size: 0.55rem;
+    }
+
+    .credits-toggle {
+        font-size: 0.65rem;
+        padding: 4px 10px;
+    }
+
     .stats-panel {
         left: 5px;
-        bottom: 5px;
+        bottom: 70px;
         padding: 8px 12px;
         font-size: 0.75rem;
     }
@@ -1088,7 +1250,7 @@ body {
 
     .visitor-counter {
         right: 5px;
-        bottom: 5px;
+        bottom: 70px;
         padding: 6px 10px;
     }
 

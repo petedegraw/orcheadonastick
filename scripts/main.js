@@ -166,13 +166,16 @@ const OrcHead = {
     },
 
     setupAttribution() {
-        const toggle = document.getElementById('attribution-toggle');
-        const content = document.getElementById('attribution-content');
+        const toggle = document.getElementById('credits-toggle');
+        const content = document.getElementById('credits-content');
 
         if (toggle && content) {
             toggle.addEventListener('click', (e) => {
                 e.preventDefault();
                 content.classList.toggle('visible');
+                toggle.textContent = content.classList.contains('visible')
+                    ? 'Hide Credits'
+                    : 'Credits & Attribution';
             });
         }
     },

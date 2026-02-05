@@ -708,32 +708,110 @@ const EasterEggs = {
     },
 
     activateParty() {
-        // PARTY MODE - everything at once!
-        const effects = ['sauron-pulse', 'screen-shake'];
+        // MAXIMUM PARTY MODE - ABSOLUTE CHAOS
         const orcHead = document.getElementById('orc-head');
-
         document.body.classList.add('party-mode');
-        this.showNotification('PARTY IN THE SHIRE!');
 
-        if (orcHead) {
-            const animations = ['possessed-spin', 'isengard-bounce', 'potatoes-bounce'];
-            let i = 0;
-            const interval = setInterval(() => {
-                orcHead.className = 'party-orc';
-                orcHead.classList.add(animations[i % animations.length]);
-                i++;
-            }, 500);
-
-            setTimeout(() => {
-                clearInterval(interval);
-                orcHead.className = '';
-                orcHead.id = 'orc-head';
-            }, 5000);
+        // Play horn sound
+        const hornSound = document.getElementById('horn-sound');
+        if (hornSound) {
+            hornSound.currentTime = 0;
+            hornSound.play().catch(() => {});
         }
 
+        // Spawn confetti
+        this.spawnConfetti();
+
+        // Spawn floating quotes
+        const quotes = [
+            'PARTY!', 'GROND!', 'PO-TA-TOES!', 'DEATH!',
+            'FOR FRODO!', 'MY PRECIOUS!', 'ISENGARD!', 'MEAT!'
+        ];
+        let quoteIndex = 0;
+        const quoteInterval = setInterval(() => {
+            this.spawnFloatingText(quotes[quoteIndex % quotes.length]);
+            quoteIndex++;
+        }, 400);
+
+        // Cycle through notifications
+        const notifications = [
+            'PARTY IN THE SHIRE!',
+            'LOOKS LIKE PARTY\'S BACK ON THE MENU!',
+            'THEY\'RE TAKING THE PARTY TO ISENGARD!',
+            'ONE PARTY TO RULE THEM ALL!'
+        ];
+        let notifIndex = 0;
+        const notifInterval = setInterval(() => {
+            this.showNotification(notifications[notifIndex % notifications.length]);
+            notifIndex++;
+        }, 1500);
+
+        // Orc head goes absolutely wild
+        if (orcHead) {
+            orcHead.classList.add('party-orc-wild');
+        }
+
+        // Spawn extra orc heads
+        this.spawnPartyOrcs();
+
+        // End the madness after 8 seconds
         setTimeout(() => {
+            clearInterval(quoteInterval);
+            clearInterval(notifInterval);
             document.body.classList.remove('party-mode');
-        }, 5000);
+            if (orcHead) {
+                orcHead.classList.remove('party-orc-wild');
+            }
+            // Clean up party elements
+            document.querySelectorAll('.confetti, .floating-text, .party-orc-clone').forEach(el => el.remove());
+        }, 8000);
+    },
+
+    spawnConfetti() {
+        const colors = ['#ff0000', '#ff8000', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#ff00ff', '#ffd700'];
+        const container = document.createElement('div');
+        container.className = 'confetti-container';
+        document.body.appendChild(container);
+
+        for (let i = 0; i < 100; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationDelay = Math.random() * 3 + 's';
+            confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            container.appendChild(confetti);
+        }
+
+        setTimeout(() => container.remove(), 8000);
+    },
+
+    spawnFloatingText(text) {
+        const floating = document.createElement('div');
+        floating.className = 'floating-text';
+        floating.textContent = text;
+        floating.style.left = Math.random() * 80 + 10 + '%';
+        floating.style.top = Math.random() * 60 + 20 + '%';
+        floating.style.fontSize = (Math.random() * 2 + 1) + 'rem';
+        floating.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
+        document.body.appendChild(floating);
+
+        setTimeout(() => floating.remove(), 2000);
+    },
+
+    spawnPartyOrcs() {
+        const originalOrc = document.getElementById('orc-head');
+        if (!originalOrc) return;
+
+        for (let i = 0; i < 6; i++) {
+            const clone = document.createElement('img');
+            clone.src = originalOrc.src;
+            clone.className = 'party-orc-clone';
+            clone.style.left = Math.random() * 80 + 10 + '%';
+            clone.style.top = Math.random() * 60 + 20 + '%';
+            clone.style.animationDelay = Math.random() * 0.5 + 's';
+            document.body.appendChild(clone);
+        }
     },
 
     showNotification(message) {
