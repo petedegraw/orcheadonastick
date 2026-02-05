@@ -239,6 +239,361 @@ const OrcHead = {
                 }
             });
         }
+
+        // GROND button - Battering ram breaks the page
+        const grondBtn = document.getElementById('btn-grond');
+        if (grondBtn) {
+            grondBtn.addEventListener('click', () => this.actionGrondSmash());
+        }
+
+        // Second Breakfast button - Food rains from sky with meal counter
+        const breakfastBtn = document.getElementById('btn-breakfast');
+        if (breakfastBtn) {
+            breakfastBtn.addEventListener('click', () => this.actionSecondBreakfast());
+        }
+
+        // Light Beacons button - Chain reaction beacon lighting
+        const beaconsBtn = document.getElementById('btn-beacons');
+        if (beaconsBtn) {
+            beaconsBtn.addEventListener('click', () => this.actionLightBeacons());
+        }
+
+        // To Isengard button - Marching orcs across screen
+        const isengardBtn = document.getElementById('btn-isengard');
+        if (isengardBtn) {
+            isengardBtn.addEventListener('click', () => this.actionMarchToIsengard());
+        }
+
+        // Party Mode button - Bilbo's birthday party with fireworks
+        const partyBtn = document.getElementById('btn-party');
+        if (partyBtn) {
+            partyBtn.addEventListener('click', () => this.actionBilboParty());
+        }
+
+        // My Precious button - Ring vision wraith world
+        const preciousBtn = document.getElementById('btn-precious');
+        if (preciousBtn) {
+            preciousBtn.addEventListener('click', () => this.actionRingVision());
+        }
+
+        // The Eagles button - Eagles swoop and carry orc head
+        const eaglesBtn = document.getElementById('btn-eagles');
+        if (eaglesBtn) {
+            eaglesBtn.addEventListener('click', () => this.actionEagleRescue());
+        }
+
+        // Toss a Dwarf button - Physics toss of orc head
+        const tossBtn = document.getElementById('btn-toss');
+        if (tossBtn) {
+            tossBtn.addEventListener('click', () => this.actionTossDwarf());
+        }
+    },
+
+    // =========================================
+    // NEW BUTTON ACTIONS
+    // =========================================
+
+    actionGrondSmash() {
+        // Battering ram smashes and cracks appear on screen
+        this.showQuote('GROND! GROND! GROND!');
+
+        // Create crack overlay
+        const crackOverlay = document.createElement('div');
+        crackOverlay.className = 'grond-crack-overlay';
+        document.body.appendChild(crackOverlay);
+
+        // Add multiple cracks
+        for (let i = 0; i < 8; i++) {
+            setTimeout(() => {
+                const crack = document.createElement('div');
+                crack.className = 'grond-crack';
+                crack.style.left = Math.random() * 100 + '%';
+                crack.style.top = Math.random() * 100 + '%';
+                crack.style.transform = `rotate(${Math.random() * 360}deg)`;
+                crackOverlay.appendChild(crack);
+
+                // Screen shake on each hit
+                document.body.classList.add('grond-impact');
+                setTimeout(() => document.body.classList.remove('grond-impact'), 100);
+            }, i * 300);
+        }
+
+        // Ram appears and smashes
+        const ram = document.createElement('div');
+        ram.className = 'grond-ram';
+        ram.textContent = '🪵';
+        document.body.appendChild(ram);
+
+        setTimeout(() => {
+            crackOverlay.remove();
+            ram.remove();
+        }, 4000);
+    },
+
+    actionSecondBreakfast() {
+        // Hobbit meal schedule with food rain
+        const meals = ['Breakfast', 'Second Breakfast', 'Elevenses', 'Luncheon', 'Afternoon Tea', 'Dinner', 'Supper'];
+        const foods = ['🍞', '🧀', '🍖', '🥧', '🍄', '🍎', '🥕', '🍺', '🥚', '🍇'];
+
+        // Show meal schedule
+        const schedule = document.createElement('div');
+        schedule.className = 'meal-schedule';
+        meals.forEach((meal, i) => {
+            const item = document.createElement('div');
+            item.className = 'meal-item';
+            item.textContent = meal;
+            item.style.animationDelay = (i * 0.2) + 's';
+            schedule.appendChild(item);
+        });
+        document.body.appendChild(schedule);
+
+        this.showQuote('What about second breakfast?');
+
+        // Rain food
+        for (let i = 0; i < 30; i++) {
+            setTimeout(() => {
+                const food = document.createElement('div');
+                food.className = 'falling-food';
+                food.textContent = foods[Math.floor(Math.random() * foods.length)];
+                food.style.left = Math.random() * 100 + '%';
+                food.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(food);
+                setTimeout(() => food.remove(), 4000);
+            }, i * 100);
+        }
+
+        setTimeout(() => schedule.remove(), 5000);
+    },
+
+    actionLightBeacons() {
+        // Chain reaction beacon lighting across mountain range
+        this.showQuote('The beacons are lit!');
+
+        const beaconNames = ['Minas Tirith', 'Amon Dîn', 'Eilenach', 'Nardol', 'Erelas', 'Min-Rimmon', 'Calenhad', 'Halifirien'];
+        const container = document.createElement('div');
+        container.className = 'beacon-chain-container';
+        document.body.appendChild(container);
+
+        // Create mountain silhouette with beacons
+        beaconNames.forEach((name, i) => {
+            const beacon = document.createElement('div');
+            beacon.className = 'chain-beacon';
+            beacon.style.left = (10 + i * 11) + '%';
+            beacon.style.bottom = (15 + Math.sin(i * 0.8) * 10) + '%';
+
+            const label = document.createElement('span');
+            label.className = 'beacon-label';
+            label.textContent = name;
+            beacon.appendChild(label);
+
+            container.appendChild(beacon);
+
+            // Light each beacon in sequence
+            setTimeout(() => {
+                beacon.classList.add('lit');
+                if (i === beaconNames.length - 1) {
+                    this.showQuote('And Rohan will answer!');
+                }
+            }, i * 500);
+        });
+
+        setTimeout(() => container.remove(), 6000);
+    },
+
+    actionMarchToIsengard() {
+        // Marching orc army across screen
+        this.showQuote("They're taking the hobbits to Isengard!");
+
+        const container = document.createElement('div');
+        container.className = 'march-container';
+        document.body.appendChild(container);
+
+        // Spawn marching orcs
+        const orcEmojis = ['👹', '👺', '💀', '🧟'];
+        for (let i = 0; i < 15; i++) {
+            const orc = document.createElement('div');
+            orc.className = 'marching-orc';
+            orc.textContent = orcEmojis[Math.floor(Math.random() * orcEmojis.length)];
+            orc.style.animationDelay = (i * 0.3) + 's';
+            orc.style.bottom = (5 + Math.random() * 15) + '%';
+            container.appendChild(orc);
+        }
+
+        // Add hobbits being carried
+        setTimeout(() => {
+            const hobbits = document.createElement('div');
+            hobbits.className = 'carried-hobbits';
+            hobbits.textContent = '🧑‍🦱🧑‍🦱';
+            container.appendChild(hobbits);
+        }, 1500);
+
+        // Play drums if available
+        if (window.EasterEggs) {
+            window.EasterEggs.playDrums();
+        }
+
+        setTimeout(() => {
+            container.remove();
+            if (window.EasterEggs) {
+                window.EasterEggs.stopDrums();
+            }
+        }, 8000);
+    },
+
+    actionBilboParty() {
+        // Bilbo's 111th birthday party with Gandalf's fireworks
+        this.showQuote("A hundred and eleven years is far too short a time to live among such excellent and admirable hobbits!");
+
+        document.body.classList.add('party-night');
+
+        // Create firework container
+        const container = document.createElement('div');
+        container.className = 'fireworks-container';
+        document.body.appendChild(container);
+
+        // Launch fireworks
+        const launchFirework = () => {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = (10 + Math.random() * 80) + '%';
+            firework.style.setProperty('--hue', Math.random() * 360);
+            container.appendChild(firework);
+
+            // Create explosion particles
+            setTimeout(() => {
+                for (let i = 0; i < 12; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'firework-particle';
+                    particle.style.setProperty('--angle', (i * 30) + 'deg');
+                    particle.style.setProperty('--hue', Math.random() * 360);
+                    firework.appendChild(particle);
+                }
+            }, 600);
+
+            setTimeout(() => firework.remove(), 2000);
+        };
+
+        // Launch multiple fireworks
+        for (let i = 0; i < 10; i++) {
+            setTimeout(launchFirework, i * 400);
+        }
+
+        // Dragon firework at the end!
+        setTimeout(() => {
+            const dragon = document.createElement('div');
+            dragon.className = 'dragon-firework';
+            dragon.textContent = '🐉';
+            container.appendChild(dragon);
+            this.showQuote('GANDALF\'S FIREWORKS!');
+            setTimeout(() => dragon.remove(), 3000);
+        }, 3000);
+
+        setTimeout(() => {
+            container.remove();
+            document.body.classList.remove('party-night');
+        }, 7000);
+    },
+
+    actionRingVision() {
+        // Put on the ring - wraith world vision
+        this.showQuote('The ring takes hold...');
+
+        document.body.classList.add('ring-world');
+
+        // Create wraith figures
+        const container = document.createElement('div');
+        container.className = 'wraith-container';
+        document.body.appendChild(container);
+
+        // Spawn nazgul shadows
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                const wraith = document.createElement('div');
+                wraith.className = 'wraith-figure';
+                wraith.style.left = (10 + Math.random() * 80) + '%';
+                wraith.style.animationDelay = (Math.random() * 0.5) + 's';
+                container.appendChild(wraith);
+            }, i * 300);
+        }
+
+        // Eye of Sauron appears
+        setTimeout(() => {
+            const eye = document.createElement('div');
+            eye.className = 'ring-world-eye';
+            container.appendChild(eye);
+            this.showQuote('I SEE YOU...');
+        }, 2000);
+
+        // Hide orc head (invisible)
+        if (this.orcHead) {
+            this.orcHead.classList.add('ring-invisible');
+        }
+
+        setTimeout(() => {
+            container.remove();
+            document.body.classList.remove('ring-world');
+            if (this.orcHead) {
+                this.orcHead.classList.remove('ring-invisible');
+            }
+        }, 5000);
+    },
+
+    actionEagleRescue() {
+        // Eagles swoop down and carry the orc head away
+        this.showQuote('The Eagles are coming!');
+
+        if (!this.orcHead) return;
+
+        // Create eagle
+        const eagle = document.createElement('div');
+        eagle.className = 'rescue-eagle';
+        eagle.textContent = '🦅';
+        document.body.appendChild(eagle);
+
+        // Eagle swoops down
+        setTimeout(() => {
+            eagle.classList.add('swooping');
+        }, 100);
+
+        // Grab orc head and fly away
+        setTimeout(() => {
+            this.orcHead.classList.add('being-carried');
+            eagle.classList.remove('swooping');
+            eagle.classList.add('carrying');
+        }, 1000);
+
+        // Return
+        setTimeout(() => {
+            this.showQuote('Not today, orc head!');
+            eagle.classList.remove('carrying');
+            eagle.classList.add('returning');
+            this.orcHead.classList.remove('being-carried');
+            this.orcHead.classList.add('being-dropped');
+        }, 3000);
+
+        setTimeout(() => {
+            eagle.remove();
+            this.orcHead.classList.remove('being-dropped');
+        }, 4500);
+    },
+
+    actionTossDwarf() {
+        // Physics-based toss of the orc head
+        if (!this.orcHead) return;
+
+        this.showQuote('Nobody tosses a dwarf!');
+
+        setTimeout(() => {
+            this.showQuote("...Don't tell the elf.");
+            this.orcHead.classList.add('dwarf-tossed');
+        }, 1500);
+
+        setTimeout(() => {
+            // Landing impact
+            document.body.classList.add('toss-impact');
+            setTimeout(() => document.body.classList.remove('toss-impact'), 200);
+            this.orcHead.classList.remove('dwarf-tossed');
+        }, 3500);
     }
 };
 
