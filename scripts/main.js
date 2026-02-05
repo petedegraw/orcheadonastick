@@ -75,8 +75,8 @@ const OrcHead = {
             this.updateKillDisplay();
             this.saveStats();
 
-            // Trigger random animation
-            if (window.ChaosEngine) {
+            // Trigger random animation only if chaos is enabled
+            if (window.ChaosEngine && window.ChaosEngine.isRunning) {
                 window.ChaosEngine.triggerRandomAnimation();
             }
 
@@ -194,6 +194,27 @@ const OrcHead = {
                     const isRunning = window.ChaosEngine.toggle();
                     chaosBtn.textContent = isRunning ? 'Disable Chaos' : 'Enable Chaos';
                     this.showQuote(isRunning ? 'CHAOS UNLEASHED!' : 'Peace... for now.');
+                }
+            });
+        }
+
+        const speakBtn = document.getElementById('btn-speak');
+        if (speakBtn) {
+            speakBtn.addEventListener('click', () => {
+                const input = prompt('Speak, friend, and enter:');
+                if (input && window.EasterEggs) {
+                    const phrase = input.toLowerCase().trim();
+                    const secretPhrases = {
+                        'grond': 'grond-mode',
+                        'isengard': 'isengard-mode',
+                        'precious': 'precious-mode',
+                        'mellon': 'mellon-mode'
+                    };
+                    if (secretPhrases[phrase]) {
+                        window.EasterEggs.activateSecretMode(secretPhrases[phrase]);
+                    } else {
+                        this.showQuote('The doors remain shut...');
+                    }
                 }
             });
         }

@@ -62,6 +62,7 @@ const ChaosEngine = {
         const delay = Math.random() * 12000 + 3000;
 
         this.timeoutId = setTimeout(() => {
+            if (!this.isRunning) return;
             this.triggerRandomAnimation();
             this.scheduleNextAnimation();
         }, delay);
