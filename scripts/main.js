@@ -148,52 +148,51 @@ const OrcHead = {
     },
 
     setupAttribution() {
-        // Desktop credits toggle
-        const toggle = document.getElementById('credits-toggle');
         const content = document.getElementById('credits-content');
 
-        if (toggle && content) {
-            toggle.addEventListener('click', (e) => {
-                e.preventDefault();
-                content.classList.toggle('visible');
-                toggle.textContent = content.classList.contains('visible')
-                    ? 'Hide Credits'
-                    : 'Credits & Attribution';
-            });
-        }
+        // Main menu toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const menuDropdown = document.getElementById('menu-dropdown');
 
-        // Mobile menu toggle
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        const mobileMenuDropdown = document.getElementById('mobile-menu-dropdown');
-
-        if (mobileMenuToggle && mobileMenuDropdown) {
-            mobileMenuToggle.addEventListener('click', () => {
-                mobileMenuDropdown.classList.toggle('visible');
-                mobileMenuToggle.textContent = mobileMenuDropdown.classList.contains('visible') ? '✕' : '☰';
+        if (menuToggle && menuDropdown) {
+            menuToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                menuDropdown.classList.toggle('visible');
+                menuToggle.textContent = menuDropdown.classList.contains('visible') ? '✕' : '☰';
             });
 
             // Close menu when clicking outside
             document.addEventListener('click', (e) => {
-                if (!e.target.closest('.mobile-menu')) {
-                    mobileMenuDropdown.classList.remove('visible');
-                    mobileMenuToggle.textContent = '☰';
+                if (!e.target.closest('.main-menu')) {
+                    menuDropdown.classList.remove('visible');
+                    menuToggle.textContent = '☰';
                 }
             });
         }
 
-        // Mobile credits button
-        const mobileCreditsToggle = document.getElementById('mobile-credits-toggle');
+        // Credits toggle from menu
+        const creditsToggleMenu = document.getElementById('credits-toggle-menu');
 
-        if (mobileCreditsToggle && content) {
-            mobileCreditsToggle.addEventListener('click', () => {
+        if (creditsToggleMenu && content) {
+            creditsToggleMenu.addEventListener('click', () => {
                 content.classList.toggle('visible');
-                // Close the mobile menu
-                if (mobileMenuDropdown) {
-                    mobileMenuDropdown.classList.remove('visible');
-                    mobileMenuToggle.textContent = '☰';
+                // Close the menu
+                if (menuDropdown) {
+                    menuDropdown.classList.remove('visible');
+                    menuToggle.textContent = '☰';
                 }
             });
         }
+
+        // Close credits when clicking outside (on mobile overlay)
+        document.addEventListener('click', (e) => {
+            if (content && content.classList.contains('visible') &&
+                !e.target.closest('.credits-content') &&
+                !e.target.closest('#credits-toggle-menu') &&
+                !e.target.closest('#credits-toggle')) {
+                content.classList.remove('visible');
+            }
+        });
     },
 
     setupButtons() {

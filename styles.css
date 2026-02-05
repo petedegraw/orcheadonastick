@@ -1576,7 +1576,7 @@ body {
 
 .stats-panel {
     position: fixed;
-    bottom: 80px;
+    bottom: 20px;
     left: 20px;
     left: max(20px, env(safe-area-inset-left));
     background: rgba(0, 0, 0, 0.8);
@@ -1612,64 +1612,71 @@ body {
    ACTION BUTTONS
    =========================================== */
 
-.action-buttons {
+/* ===========================================
+   MAIN MENU
+   =========================================== */
+
+.main-menu {
     position: fixed;
     top: 20px;
     top: max(20px, env(safe-area-inset-top));
     right: 20px;
     right: max(20px, env(safe-area-inset-right));
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    gap: 8px;
-    z-index: 100;
-    max-height: calc(100vh - 40px);
-    align-content: flex-end;
-}
-
-/* ===========================================
-   MOBILE MENU
-   =========================================== */
-
-.mobile-menu {
-    display: none;
-    position: fixed;
-    top: 10px;
-    right: 10px;
     z-index: 150;
 }
 
-.mobile-menu-toggle {
+.menu-toggle {
     background: linear-gradient(180deg, #8b4513 0%, #5d2e0a 100%);
     color: #ffd700;
     border: 2px solid #d4af37;
     border-radius: 8px;
-    padding: 8px 12px;
-    font-size: 1.2rem;
+    padding: 10px 15px;
+    font-size: 1.3rem;
     cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.mobile-menu-dropdown {
+.menu-toggle:hover {
+    background: linear-gradient(180deg, #a0522d 0%, #8b4513 100%);
+    transform: scale(1.05);
+}
+
+.menu-dropdown {
     display: none;
     position: absolute;
     top: 100%;
     right: 0;
-    margin-top: 5px;
+    margin-top: 8px;
     background: rgba(0, 0, 0, 0.95);
     border: 2px solid #8b4513;
     border-radius: 8px;
-    overflow: hidden;
-    min-width: 180px;
+    padding: 10px;
+    min-width: 200px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
 }
 
-.mobile-menu-dropdown.visible {
+.menu-dropdown.visible {
     display: block;
 }
 
-.mobile-menu-item {
+/* Action buttons - column below menu on desktop */
+.action-buttons {
+    position: fixed;
+    top: 70px;
+    top: calc(max(20px, env(safe-area-inset-top)) + 50px);
+    right: 20px;
+    right: max(20px, env(safe-area-inset-right));
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 100;
+}
+
+.menu-item {
     display: block;
     width: 100%;
-    padding: 12px 15px;
+    padding: 10px 12px;
     background: none;
     border: none;
     color: #d4af37;
@@ -1677,9 +1684,10 @@ body {
     font-size: 0.85rem;
     text-align: left;
     cursor: pointer;
+    border-radius: 4px;
 }
 
-.mobile-menu-item:hover {
+.menu-item:hover {
     background: rgba(139, 69, 19, 0.5);
 }
 
@@ -1804,15 +1812,7 @@ body {
    =========================================== */
 
 .site-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.85);
-    padding: 10px 20px;
-    text-align: center;
-    z-index: 100;
-    border-top: 1px solid #8b4513;
+    display: none;
 }
 
 .disclaimer {
@@ -1841,14 +1841,19 @@ body {
 
 .credits-content {
     display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background: rgba(0, 0, 0, 0.95);
-    padding: 15px;
-    margin-top: 10px;
-    border-radius: 8px;
+    border: 2px solid #8b4513;
+    border-radius: 10px;
+    padding: 20px;
     text-align: left;
     max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: 200;
 }
 
 .credits-content.visible {
@@ -1907,14 +1912,9 @@ body {
 @media (max-width: 768px) {
     .stats-panel {
         left: 10px;
-        bottom: 75px;
+        bottom: 15px;
         padding: 10px 15px;
         font-size: 0.8rem;
-    }
-
-    .action-buttons {
-        top: 10px;
-        right: 10px;
     }
 
     .action-btn {
@@ -1953,12 +1953,17 @@ body {
         gap: 10px;
     }
 
-    .mobile-menu {
-        display: block;
+    .main-menu {
+        top: 10px;
+        right: 10px;
     }
 
+    .menu-dropdown {
+        min-width: 180px;
+    }
+
+    /* Action buttons as bottom grid on mobile */
     .action-buttons {
-        position: fixed;
         top: auto;
         bottom: 10px;
         bottom: max(10px, env(safe-area-inset-bottom));
@@ -1967,10 +1972,9 @@ body {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 5px;
-        max-height: none;
     }
 
-    .action-btn {
+    .action-buttons .action-btn {
         padding: 10px 5px;
         font-size: 0.6rem;
         min-height: 40px;
@@ -1980,20 +1984,8 @@ body {
         display: none;
     }
 
-    .credits-content.visible {
-        display: block;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(0, 0, 0, 0.95);
-        border: 2px solid #8b4513;
-        border-radius: 10px;
-        padding: 20px;
+    .credits-content {
         max-width: 90vw;
-        max-height: 80vh;
-        overflow-y: auto;
-        z-index: 200;
     }
 
     .quote-overlay {
@@ -2022,7 +2014,7 @@ body {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .action-btn {
+    .action-buttons .action-btn {
         padding: 8px 5px;
         font-size: 0.55rem;
         min-height: 36px;
@@ -2040,20 +2032,14 @@ body {
     }
 
     .action-buttons {
-        position: fixed;
-        bottom: 5px;
-        left: 5px;
-        right: 5px;
-        top: auto;
-        display: grid;
         grid-template-columns: repeat(6, 1fr);
         gap: 4px;
-        max-height: none;
+        bottom: 5px;
     }
 
-    .action-btn {
+    .action-buttons .action-btn {
         padding: 4px 6px;
-        font-size: 0.6rem;
+        font-size: 0.55rem;
         min-height: 28px;
     }
 
