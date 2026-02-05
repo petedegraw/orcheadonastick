@@ -28,21 +28,18 @@ const OrcHead = {
 
     // State
     killCount: 0,
-    visitorCount: 0,
     sauronMode: false,
     quoteTimeout: null,
 
     init() {
         this.orcHead = document.getElementById('orc-head');
         this.killCounterEl = document.getElementById('kill-counter');
-        this.visitorCounterEl = document.getElementById('visitor-counter');
         this.quoteOverlay = document.getElementById('quote-overlay');
 
         this.loadStats();
         this.setupClickHandler();
         this.setupQuoteSystem();
         this.setupButtons();
-        this.incrementVisitorCount();
         this.setupAttribution();
 
         // Initialize other modules
@@ -59,13 +56,11 @@ const OrcHead = {
 
     loadStats() {
         this.killCount = parseInt(localStorage.getItem('orchead_kills') || '0');
-        this.visitorCount = parseInt(localStorage.getItem('orchead_visitors') || '0');
         this.updateKillDisplay();
     },
 
     saveStats() {
         localStorage.setItem('orchead_kills', this.killCount.toString());
-        localStorage.setItem('orchead_visitors', this.visitorCount.toString());
     },
 
     setupClickHandler() {
@@ -152,20 +147,8 @@ const OrcHead = {
         }, 3000);
     },
 
-    incrementVisitorCount() {
-        // Check if this is a new session
-        if (!sessionStorage.getItem('orchead_counted')) {
-            this.visitorCount++;
-            sessionStorage.setItem('orchead_counted', 'true');
-            this.saveStats();
-        }
-
-        if (this.visitorCounterEl) {
-            this.visitorCounterEl.textContent = this.visitorCount.toString().padStart(6, '0');
-        }
-    },
-
     setupAttribution() {
+        // Desktop credits toggle
         const toggle = document.getElementById('credits-toggle');
         const content = document.getElementById('credits-content');
 
@@ -176,6 +159,39 @@ const OrcHead = {
                 toggle.textContent = content.classList.contains('visible')
                     ? 'Hide Credits'
                     : 'Credits & Attribution';
+            });
+        }
+
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenuDropdown = document.getElementById('mobile-menu-dropdown');
+
+        if (mobileMenuToggle && mobileMenuDropdown) {
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuDropdown.classList.toggle('visible');
+                mobileMenuToggle.textContent = mobileMenuDropdown.classList.contains('visible') ? '✕' : '☰';
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.mobile-menu')) {
+                    mobileMenuDropdown.classList.remove('visible');
+                    mobileMenuToggle.textContent = '☰';
+                }
+            });
+        }
+
+        // Mobile credits button
+        const mobileCreditsToggle = document.getElementById('mobile-credits-toggle');
+
+        if (mobileCreditsToggle && content) {
+            mobileCreditsToggle.addEventListener('click', () => {
+                content.classList.toggle('visible');
+                // Close the mobile menu
+                if (mobileMenuDropdown) {
+                    mobileMenuDropdown.classList.remove('visible');
+                    mobileMenuToggle.textContent = '☰';
+                }
             });
         }
     },

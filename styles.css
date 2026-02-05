@@ -1609,41 +1609,6 @@ body {
 }
 
 /* ===========================================
-   VISITOR COUNTER (Web 1.0 Style)
-   =========================================== */
-
-.visitor-counter {
-    position: fixed;
-    bottom: 80px;
-    right: 20px;
-    right: max(20px, env(safe-area-inset-right));
-    background: #1a1a1a;
-    padding: 10px 15px;
-    border-radius: 4px;
-    border: 3px inset #444;
-    z-index: 100;
-    text-align: center;
-}
-
-.visitor-label {
-    color: #888;
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    margin-bottom: 5px;
-}
-
-.visitor-lcd {
-    font-family: 'Courier New', monospace;
-    font-size: 1.2rem;
-    color: #00ff00;
-    background: #000;
-    padding: 5px 10px;
-    border: 2px inset #333;
-    letter-spacing: 3px;
-    text-shadow: 0 0 10px #00ff00;
-}
-
-/* ===========================================
    ACTION BUTTONS
    =========================================== */
 
@@ -1660,6 +1625,62 @@ body {
     z-index: 100;
     max-height: calc(100vh - 40px);
     align-content: flex-end;
+}
+
+/* ===========================================
+   MOBILE MENU
+   =========================================== */
+
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 150;
+}
+
+.mobile-menu-toggle {
+    background: linear-gradient(180deg, #8b4513 0%, #5d2e0a 100%);
+    color: #ffd700;
+    border: 2px solid #d4af37;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.mobile-menu-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 5px;
+    background: rgba(0, 0, 0, 0.95);
+    border: 2px solid #8b4513;
+    border-radius: 8px;
+    overflow: hidden;
+    min-width: 180px;
+}
+
+.mobile-menu-dropdown.visible {
+    display: block;
+}
+
+.mobile-menu-item {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    background: none;
+    border: none;
+    color: #d4af37;
+    font-family: 'Cinzel', Georgia, serif;
+    font-size: 0.85rem;
+    text-align: left;
+    cursor: pointer;
+}
+
+.mobile-menu-item:hover {
+    background: rgba(139, 69, 19, 0.5);
 }
 
 .action-btn {
@@ -1891,16 +1912,6 @@ body {
         font-size: 0.8rem;
     }
 
-    .visitor-counter {
-        right: 10px;
-        bottom: 75px;
-        padding: 8px 12px;
-    }
-
-    .visitor-lcd {
-        font-size: 1rem;
-    }
-
     .action-buttons {
         top: 10px;
         right: 10px;
@@ -1932,7 +1943,8 @@ body {
 
     .stats-panel {
         left: 5px;
-        bottom: 70px;
+        top: 10px;
+        bottom: auto;
         padding: 8px 12px;
         font-size: 0.75rem;
     }
@@ -1941,37 +1953,47 @@ body {
         gap: 10px;
     }
 
-    .visitor-counter {
-        right: 5px;
-        bottom: 70px;
-        padding: 6px 10px;
-    }
-
-    .visitor-label {
-        font-size: 0.6rem;
-    }
-
-    .visitor-lcd {
-        font-size: 0.9rem;
-        padding: 4px 8px;
+    .mobile-menu {
+        display: block;
     }
 
     .action-buttons {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        top: 10px;
-        left: 50%;
-        right: auto;
-        transform: translateX(-50%);
-        gap: 6px;
-        max-width: 95vw;
+        position: fixed;
+        top: auto;
+        bottom: 10px;
+        bottom: max(10px, env(safe-area-inset-bottom));
+        left: 5px;
+        right: 5px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 5px;
+        max-height: none;
     }
 
     .action-btn {
-        padding: 8px 12px;
-        font-size: 0.7rem;
+        padding: 10px 5px;
+        font-size: 0.6rem;
         min-height: 40px;
+    }
+
+    .site-footer {
+        display: none;
+    }
+
+    .credits-content.visible {
+        display: block;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.95);
+        border: 2px solid #8b4513;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 90vw;
+        max-height: 80vh;
+        overflow-y: auto;
+        z-index: 200;
     }
 
     .quote-overlay {
@@ -1996,42 +2018,43 @@ body {
         padding: 6px 10px;
     }
 
-    /* Hide visitor counter to prevent overlap */
-    .visitor-counter {
-        display: none;
+    .action-buttons {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .action-btn {
-        padding: 6px 10px;
-        font-size: 0.65rem;
+        padding: 8px 5px;
+        font-size: 0.55rem;
+        min-height: 36px;
     }
 }
 
 /* Landscape mobile */
 @media (max-height: 500px) and (orientation: landscape) {
     .stats-panel {
-        bottom: 5px;
+        top: 5px;
         left: 5px;
+        bottom: auto;
         padding: 6px 10px;
         font-size: 0.7rem;
     }
 
-    .visitor-counter {
-        bottom: 5px;
-        right: 5px;
-    }
-
     .action-buttons {
-        top: 5px;
+        position: fixed;
+        bottom: 5px;
+        left: 5px;
         right: 5px;
-        flex-direction: row;
-        gap: 5px;
+        top: auto;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 4px;
+        max-height: none;
     }
 
     .action-btn {
-        padding: 6px 12px;
-        font-size: 0.75rem;
-        min-height: 36px;
+        padding: 4px 6px;
+        font-size: 0.6rem;
+        min-height: 28px;
     }
 
     .quote-overlay {
