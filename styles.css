@@ -1,0 +1,18 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ff8000;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    max-height: 100%;
+    width: auto;
+}
