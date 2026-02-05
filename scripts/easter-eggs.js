@@ -53,7 +53,10 @@ const EasterEggs = {
         'tomato': 'tomato-mode',
         'denethor': 'denethor-mode',
         'intelligence': 'intelligence-mode',
-        'moria': 'moria-mode'
+        'moria': 'moria-mode',
+        'faramir': 'faramir-mode',
+        'quality': 'faramir-mode',
+        'ithilien': 'faramir-mode'
     },
 
     currentPhrase: '',
@@ -304,6 +307,9 @@ const EasterEggs = {
                 break;
             case 'moria-mode':
                 this.activateMoria();
+                break;
+            case 'faramir-mode':
+                this.activateFaramir();
                 break;
         }
     },
@@ -1098,6 +1104,59 @@ const EasterEggs = {
             if (orcHead) orcHead.classList.remove('moria-dread');
             this.stopDrums();
         }, 9000);
+    },
+
+    activateFaramir() {
+        // A chance for Faramir, Captain of Gondor, to show his quality
+        document.body.classList.add('faramir-mode');
+        const orcHead = document.getElementById('orc-head');
+
+        this.showNotification('A chance for Faramir, Captain of Gondor, to show his quality.');
+
+        // Rangers of Ithilien ambush - arrows fly across screen
+        const arrowContainer = document.createElement('div');
+        arrowContainer.className = 'ithilien-arrows';
+        document.body.appendChild(arrowContainer);
+
+        for (let i = 0; i < 8; i++) {
+            setTimeout(() => {
+                const arrow = document.createElement('div');
+                arrow.className = 'ranger-arrow';
+                arrow.textContent = '➳';
+                arrow.style.top = (15 + Math.random() * 70) + '%';
+                arrowContainer.appendChild(arrow);
+                setTimeout(() => arrow.remove(), 1000);
+            }, i * 200);
+        }
+
+        // The ring temptation moment
+        setTimeout(() => {
+            this.showNotification('The Ring... I could take it to my father...');
+            if (orcHead) {
+                orcHead.classList.add('ring-temptation');
+            }
+        }, 3000);
+
+        // Faramir resists
+        setTimeout(() => {
+            this.showNotification('I would not take this thing if it lay by the highway.');
+            if (orcHead) {
+                orcHead.classList.remove('ring-temptation');
+                orcHead.classList.add('faramir-noble');
+            }
+        }, 5500);
+
+        setTimeout(() => {
+            this.showNotification('Go, Frodo. Go with the goodwill of all Men.');
+        }, 8000);
+
+        setTimeout(() => {
+            document.body.classList.remove('faramir-mode');
+            arrowContainer.remove();
+            if (orcHead) {
+                orcHead.classList.remove('faramir-noble');
+            }
+        }, 10000);
     },
 
     playDrums() {

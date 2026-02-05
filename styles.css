@@ -1497,6 +1497,62 @@ body {
 }
 
 /* ===========================================
+   FARAMIR MODE
+   =========================================== */
+
+.faramir-mode {
+    background: linear-gradient(180deg, #1a2a1a 0%, #0a1a0a 50%, #1a2a1a 100%) !important;
+}
+
+.ithilien-arrows {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1500;
+    overflow: hidden;
+}
+
+.ranger-arrow {
+    position: absolute;
+    left: -50px;
+    font-size: 2rem;
+    color: #8b4513;
+    animation: arrow-fly 1s linear forwards;
+    text-shadow: 0 0 5px #000;
+}
+
+@keyframes arrow-fly {
+    0% { left: -50px; transform: rotate(-10deg); }
+    100% { left: 110%; transform: rotate(-10deg); }
+}
+
+.ring-temptation {
+    animation: ring-tempt 0.5s ease-in-out infinite;
+    filter: brightness(1.2) saturate(1.5);
+}
+
+@keyframes ring-tempt {
+    0%, 100% {
+        filter: brightness(1.2) saturate(1.5);
+        box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    }
+    50% {
+        filter: brightness(1.5) saturate(2);
+        box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
+    }
+}
+
+.faramir-noble {
+    animation: noble-glow 1s ease-out forwards;
+}
+
+@keyframes noble-glow {
+    0% { filter: brightness(1.5) saturate(2); }
+    50% { filter: brightness(2) saturate(1) sepia(0.3); }
+    100% { filter: brightness(1) saturate(1); }
+}
+
+/* ===========================================
    BERSERKER MODE (Rapid Clicking)
    =========================================== */
 
